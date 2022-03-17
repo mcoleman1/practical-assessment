@@ -1,0 +1,23 @@
+<form [formGroup]="formGroup" class="container">
+  <mat-form-field>
+    <mat-label>Search Term</mat-label>
+    <input
+    matInput
+    type="text"
+    formControlName="searchTerm"
+    class="input"
+    autocomplete="off">
+  </mat-form-field>
+  <mat-form-field>
+    <input
+    matInput
+    type="number"
+    formControlName="maxResults"
+    class="input"
+    autocomplete="off">
+    <mat-error *ngIf="formGroup.get('maxResults')?.hasError('min') || formGroup.get('maxResults')?.hasError('max')">Max Results must be between 10 and 50.</mat-error>
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="searchTweets(formGroup.get('searchTerm')?.value, formGroup.get('maxResults')?.value)">Refresh</button>
+</form>
+
+<app-display-tweets [data$]="tweets$"></app-display-tweets>

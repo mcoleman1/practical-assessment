@@ -1,0 +1,16 @@
+
+<table *ngIf="(data$ | async)?.length" mat-table [dataSource]="data$" class="mat-elevation-z8 width-fill">
+
+  <ng-container matColumnDef="number">
+    <th mat-header-cell *matHeaderCellDef> No. </th>
+    <td class="number-width" mat-cell *matCellDef="let element; let i = index"> {{ i + 1 }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="text">
+    <th mat-header-cell *matHeaderCellDef> Tweet </th>
+    <td mat-cell *matCellDef="let element"> {{ element.text }} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
