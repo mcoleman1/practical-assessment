@@ -11,7 +11,6 @@ import { TweetsStore } from './tweets.store';
   selector: 'app-search-tweets',
   templateUrl: './search-tweets.component.html',
   styleUrls: ['./search-tweets.component.scss'],
-  providers: [ ComponentStore ]
 })
 export class SearchTweetsComponent implements OnInit {
 
