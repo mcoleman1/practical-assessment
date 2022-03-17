@@ -1,0 +1,24 @@
+.form-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 4rem 8rem;
+}
+
+.weather {
+  &__container {
+    margin: 0 8rem;
+    width: 33%;
+    span {
+      display: inline-block;
+    }
+  }
+  &__key {
+    color: #999;
+    min-width: 100px;
+  }
+
+  &__value {
+    color: #ddd;
+  }
+}

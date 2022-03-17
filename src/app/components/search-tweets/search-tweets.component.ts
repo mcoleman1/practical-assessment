@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ComponentStore } from '@ngrx/component-store';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil, debounceTime } from 'rxjs/operators';
 import { Tweet } from 'src/app/models/tweet.model';
 import { SearchTweetsService } from 'src/app/services/search-tweets.service';
+import { WeatherService } from 'src/app/services/weather.service';
 import { TweetsStore } from './tweets.store';
 
 @Component({
@@ -12,7 +12,7 @@ import { TweetsStore } from './tweets.store';
   templateUrl: './search-tweets.component.html',
   styleUrls: ['./search-tweets.component.scss'],
 })
-export class SearchTweetsComponent implements OnInit {
+export class SearchTweetsComponent implements OnInit, OnDestroy {
 
   public formGroup: FormGroup;
   public tweets$: Observable<Array<Tweet>> = this.tweetsStore.tweets$;
@@ -31,7 +31,7 @@ export class SearchTweetsComponent implements OnInit {
     this.subscribeToSearchTerm();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.destroyed$.next();
     this.destroyed$.complete();
   }
@@ -93,7 +93,7 @@ export class SearchTweetsComponent implements OnInit {
    *
    * @returns void
    */
-  public subscribeToSearchTerm() {
+  public subscribeToSearchTerm(): void {
     this.formGroup.get('searchTerm').valueChanges.pipe(
       takeUntil(this.destroyed$),
       debounceTime(300)

@@ -1,0 +1,51 @@
+<section class="center__column">
+  <form [formGroup]="weatherForm" class="form-container">
+    <mat-form-field>
+      <mat-label>City Name</mat-label>
+      <input
+      type="text"
+      matInput
+      class="input"
+      autocomplete="off"
+      [formControl]="cityNameCtrl" >
+      <mat-error *ngIf="!cityNameCtrl.valid">City Name is not valid. Enter a valid City Name to continue.</mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="accent" (click)="getWeatherData(cityNameCtrl.value)">Search</button>
+  </form>
+
+
+  <mat-card *ngIf="weatherData" class="weather__container mat-elevation-z8">
+    <mat-card-title>{{ weatherData?.name }}</mat-card-title>
+    <mat-card-subtitle>Weather Data</mat-card-subtitle>
+    <mat-card-content>
+      <div>
+        <span class="weather__key">Last Update:</span>
+        <span class="weather__value">{{ requestTime | date : 'medium' }}</span>
+      </div>
+      <div>
+        <span class="weather__key">Temperature:</span>
+        <span class="weather__value">{{ weatherData?.main.temp | temperature }}&deg;F</span>
+      </div>
+      <div>
+        <span class="weather__key">Humidity:</span>
+        <span class="weather__value">{{ weatherData?.main.humidity }}%</span>
+      </div>
+      <div>
+        <span class="weather__key">Visibility:</span>
+        <span class="weather__value">{{ weatherData?.visibility | number:'1.0':'en-US' }}</span>
+      </div>
+      <div>
+        <span class="weather__key">Latitude:</span>
+        <span class="weather__value">{{ weatherData?.coord.lat?.toFixed(3) }}</span>
+      </div>
+      <div>
+        <span class="weather__key">Longitude:</span>
+        <span class="weather__value">{{ weatherData?.coord.lon?.toFixed(3) }}</span>
+      </div>
+      <div>
+        <span class="weather__key">Wind:</span>
+        <span class="weather__value">{{ weatherData?.wind?.speed }} MPH</span>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</section>

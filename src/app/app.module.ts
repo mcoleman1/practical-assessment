@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { Route, RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -10,17 +11,34 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 import { SearchTweetsComponent } from './components/search-tweets/search-tweets.component';
 import { DisplayTweetsComponent } from './components/display-tweets/display-tweets.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { WeatherComponent } from './components/weather/weather.component';
 import { TweetsStore } from './components/search-tweets/tweets.store';
+import { TemperaturePipe } from './pipes/temperature.pipe';
+
+const routes: Route[] = [
+  {
+    path: '',
+    component: SearchTweetsComponent
+  },
+  {
+    path: 'weather',
+    component: WeatherComponent
+  }
+];
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchTweetsComponent,
     DisplayTweetsComponent,
-    NavbarComponent
+    NavbarComponent,
+    WeatherComponent,
+    TemperaturePipe
   ],
   imports: [
     BrowserModule,
@@ -32,8 +50,12 @@ import { TweetsStore } from './components/search-tweets/tweets.store';
     MatInputModule,
     MatButtonModule,
     MatTableModule,
+    MatIconModule,
+    MatCardModule,
+    RouterModule.forRoot(routes)
   ],
   providers: [TweetsStore],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
