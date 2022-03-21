@@ -15,6 +15,7 @@ import { TweetsStore } from './tweets.store';
 export class SearchTweetsComponent implements OnInit, OnDestroy {
 
   public formGroup: FormGroup;
+  public mostPopularSource: string = '';
   public tweets$: Observable<Array<Tweet>> = this.tweetsStore.tweets$;
 
   private destroyed$ = new Subject<void>();
@@ -53,9 +54,11 @@ export class SearchTweetsComponent implements OnInit, OnDestroy {
           return;
         }
 
+        this.mostPopularSource = this.calculateMostPopularSource(tweets);
+
         this.tweetsStore.setState({ tweets });
       },
-      error: (err: any) => console.log(err)
+      error: (err: any) => console.error(err)
     };
 
     this.tweetsService.searchTweets(searchTerm, maxResults).subscribe(observer);
@@ -73,16 +76,18 @@ export class SearchTweetsComponent implements OnInit, OnDestroy {
     this.formGroup.get('maxResults').valueChanges.pipe(
       takeUntil(this.destroyed$),
       debounceTime(300)
-    )
-    .subscribe((maxResults: number) => {
-      if (!maxResults || isNaN(maxResults)) {
-        return;
-      }
+      )
+      .subscribe((maxResults: number) => {
+        const searchTerm: string = this.formGroup.get('searchTerm')?.value;
 
-      if (this.formGroup.valid) {
-        this.searchTweets(this.formGroup.get('searchTerm')?.value, maxResults);
-      }
-    });
+        if (!maxResults || isNaN(maxResults) || !searchTerm) {
+          return;
+        }
+
+        if (this.formGroup.valid) {
+          this.searchTweets(searchTerm, maxResults);
+        }
+      });
   }
 
 
@@ -99,14 +104,45 @@ export class SearchTweetsComponent implements OnInit, OnDestroy {
       debounceTime(300)
     )
     .subscribe((input: string) => {
-      if (!input) {
+      const maxResults: number = Number(this.formGroup.get('maxResults')?.value);
+      if (!input || !maxResults || isNaN(maxResults)) {
         return;
       }
 
       if (this.formGroup.valid) {
-        this.searchTweets(input, this.formGroup.get('maxResults')?.value);
+        this.searchTweets(input, maxResults);
       }
     });
+  }
+
+
+  /**
+   * @function calculateMostPopularSource
+   *
+   * Determines which Tweet source has the most occurrences in a given list.
+   *
+   * @param tweets (Array<Tweet>) - the array of tweets to check source occurrence against
+   *
+   * @returns (string) - the source that had the highest number of occurrences
+   */
+  private calculateMostPopularSource(tweets: Array<Tweet>): string {
+    let sourceFrequency = {};
+
+    tweets.forEach(tweet => {
+        sourceFrequency[tweet.source] = (sourceFrequency[tweet.source] || 0) + 1;
+    });
+
+    let count = 0;
+    let output = '';
+
+    for (let [key, value] of Object.entries(sourceFrequency)) {
+      if (count < Number(value)) {
+        count = Number(value);
+        output = `${key} (${value})`;
+      }
+    }
+
+    return output;
   }
 
 }

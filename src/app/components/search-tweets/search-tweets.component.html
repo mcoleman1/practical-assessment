@@ -20,4 +20,6 @@
   <button mat-raised-button color="primary" (click)="searchTweets(formGroup.get('searchTerm')?.value, formGroup.get('maxResults')?.value)">Refresh</button>
 </form>
 
+<h4 *ngIf="mostPopularSource" class="source">Most Popular Source: {{ mostPopularSource }}</h4>
+
 <app-display-tweets [data$]="tweets$"></app-display-tweets>

@@ -1,3 +1,11 @@
+td[mat-cell]:not(:last-child):not(:first-child) {
+  padding-right: 16px;
+}
+
+.created {
+  min-width: 110px;
+}
+
 .number-width {
   min-width: 60px;
 }

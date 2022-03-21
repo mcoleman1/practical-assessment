@@ -13,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
 import { SearchTweetsComponent } from './components/search-tweets/search-tweets.component';
 import { DisplayTweetsComponent } from './components/display-tweets/display-tweets.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -52,6 +53,7 @@ const routes: Route[] = [
     MatTableModule,
     MatIconModule,
     MatCardModule,
+    MatChipsModule,
     RouterModule.forRoot(routes)
   ],
   providers: [TweetsStore],

@@ -10,7 +10,7 @@ import { Tweet } from 'src/app/models/tweet.model';
 export class DisplayTweetsComponent implements OnInit {
   @Input() data$: Observable<Array<Tweet>>;
 
-  public displayedColumns = ['number', 'text'];
+  public displayedColumns = ['number', 'status', 'created_at', 'source', 'text'];
 
   constructor() { }
 

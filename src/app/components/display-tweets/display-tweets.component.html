@@ -1,9 +1,28 @@
-
 <table *ngIf="(data$ | async)?.length" mat-table [dataSource]="data$" class="mat-elevation-z8 width-fill">
 
   <ng-container matColumnDef="number">
     <th mat-header-cell *matHeaderCellDef> No. </th>
     <td class="number-width" mat-cell *matCellDef="let element; let i = index"> {{ i + 1 }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="status">
+    <th mat-header-cell *matHeaderCellDef> </th>
+    <td mat-cell *matCellDef="let element">
+      <mat-chip-list *ngIf="element.is_newest || element.is_oldest">
+        <mat-chip *ngIf="element.is_newest">NEWEST</mat-chip>
+        <mat-chip *ngIf="element.is_oldest">OLDEST</mat-chip>
+      </mat-chip-list>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="created_at">
+    <th mat-header-cell *matHeaderCellDef> Created </th>
+    <td mat-cell *matCellDef="let element" class="created"> {{ element.created_at | date : 'short' }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="source">
+    <th mat-header-cell *matHeaderCellDef> Source </th>
+    <td mat-cell *matCellDef="let element"> {{ element.source }} </td>
   </ng-container>
 
   <ng-container matColumnDef="text">
