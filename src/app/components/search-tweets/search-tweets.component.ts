@@ -15,7 +15,6 @@ import { TweetsStore } from './tweets.store';
 export class SearchTweetsComponent implements OnInit, OnDestroy {
 
   public formGroup: FormGroup;
-  public mostPopularSource: string = '';
   public mostPopularSource$: Observable<string> = this.tweetsStore.mostPopularSource$;
   public tweets$: Observable<Array<Tweet>> = this.tweetsStore.tweets$;
 
