@@ -4,18 +4,19 @@ import { Observable, Subject } from 'rxjs';
 import { takeUntil, debounceTime } from 'rxjs/operators';
 import { Tweet } from 'src/app/models/tweet.model';
 import { SearchTweetsService } from 'src/app/services/search-tweets.service';
-import { WeatherService } from 'src/app/services/weather.service';
 import { TweetsStore } from './tweets.store';
 
 @Component({
   selector: 'app-search-tweets',
   templateUrl: './search-tweets.component.html',
   styleUrls: ['./search-tweets.component.scss'],
+  providers: [ TweetsStore ]
 })
 export class SearchTweetsComponent implements OnInit, OnDestroy {
 
   public formGroup: FormGroup;
   public mostPopularSource: string = '';
+  public mostPopularSource$: Observable<string> = this.tweetsStore.mostPopularSource$;
   public tweets$: Observable<Array<Tweet>> = this.tweetsStore.tweets$;
 
   private destroyed$ = new Subject<void>();
@@ -54,9 +55,9 @@ export class SearchTweetsComponent implements OnInit, OnDestroy {
           return;
         }
 
-        this.mostPopularSource = this.calculateMostPopularSource(tweets);
+        const mostPopularSource = this.calculateMostPopularSource(tweets);
 
-        this.tweetsStore.setState({ tweets });
+        this.tweetsStore.setState({ tweets, mostPopularSource });
       },
       error: (err: any) => console.error(err)
     };

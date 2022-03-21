@@ -1,4 +1,4 @@
-<table *ngIf="(data$ | async)?.length" mat-table [dataSource]="data$" class="mat-elevation-z8 width-fill">
+<table *ngIf="(tweets$ | async)?.length" mat-table [dataSource]="tweets$" class="mat-elevation-z8 width-fill">
 
   <ng-container matColumnDef="number">
     <th mat-header-cell *matHeaderCellDef> No. </th>

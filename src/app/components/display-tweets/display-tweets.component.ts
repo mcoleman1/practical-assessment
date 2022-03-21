@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { Tweet } from 'src/app/models/tweet.model';
+import { TweetsStore } from '../search-tweets/tweets.store';
 
 @Component({
   selector: 'app-display-tweets',
@@ -8,13 +9,13 @@ import { Tweet } from 'src/app/models/tweet.model';
   styleUrls: ['./display-tweets.component.scss']
 })
 export class DisplayTweetsComponent implements OnInit {
-  @Input() data$: Observable<Array<Tweet>>;
-
   public displayedColumns = ['number', 'status', 'created_at', 'source', 'text'];
+  public tweets$: Observable<Array<Tweet>> = of([]);
 
-  constructor() { }
+  constructor(public tweetsStore: TweetsStore) { }
 
   ngOnInit(): void {
+    this.tweets$ = this.tweetsStore.tweets$;
   }
 
 }

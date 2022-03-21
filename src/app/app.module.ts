@@ -18,7 +18,6 @@ import { SearchTweetsComponent } from './components/search-tweets/search-tweets.
 import { DisplayTweetsComponent } from './components/display-tweets/display-tweets.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { WeatherComponent } from './components/weather/weather.component';
-import { TweetsStore } from './components/search-tweets/tweets.store';
 import { TemperaturePipe } from './pipes/temperature.pipe';
 
 const routes: Route[] = [
@@ -56,7 +55,7 @@ const routes: Route[] = [
     MatChipsModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [TweetsStore],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
