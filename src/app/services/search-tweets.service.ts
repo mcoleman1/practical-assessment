@@ -27,8 +27,8 @@ export class SearchTweetsService {
       query: searchTerm,
       maxResults: maxResults
     }).pipe(
-      tap((response: TweetResponse) => {
-        response.data.map((tweet: Tweet) => {
+      map((response: TweetResponse) => {
+        const tweets = response.data.map((tweet: Tweet) => {
           if (tweet.id === response.meta.newest_id) {
             tweet.is_newest = true;
           } else if (tweet.id === response.meta.oldest_id) {
@@ -36,8 +36,8 @@ export class SearchTweetsService {
           }
           return tweet;
         });
-      }),
-      map((response: TweetResponse) => response.data)
+        return tweets;
+      })
     );
   }
 }
